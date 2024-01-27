@@ -6,11 +6,12 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     [SerializeField] private string playerTag;
+    private bool canMove = false;
     private Rigidbody2D rb;
     private Transform boundaryHolder;
     private Boundary playerBoundary;
 
-
+    public bool PuedeMoverse { get => canMove; set => canMove = value; }
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -38,7 +39,10 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
-        MoverJugadorConEntradaTactil();
+        if (canMove)
+        {
+            MoverJugadorConEntradaTactil();
+        }
     }
 
     private void MoverJugadorConEntradaTactil()
@@ -62,7 +66,6 @@ public class PlayerMove : MonoBehaviour
         // Mathf.clamp = restringir el valor, ej: newPosition.x entre playerBoundary.Left y playerBoundary.Right.
         Vector2 clampedMousePos = new Vector2(Mathf.Clamp(newPosition.x, playerBoundary.Left, playerBoundary.Right), 
                                               Mathf.Clamp(newPosition.y, playerBoundary.Down, playerBoundary.Up));
-        rb.MovePosition(clampedMousePos); // Mueve el objeto a la posicion restringida
+        rb.MovePosition(clampedMousePos); // Mueve el objeto en la posicion restringida
     }
-
 }
