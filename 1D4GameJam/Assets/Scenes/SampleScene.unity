@@ -185,13 +185,92 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8505365092274858496, guid: a92a9701c4347014e92684b79b7115b7, type: 3}
       propertyPath: m_Name
-      value: Area (2)
+      value: Area azul
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a92a9701c4347014e92684b79b7115b7, type: 3}
+--- !u!1 &236770854
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 236770855}
+  - component: {fileID: 236770857}
+  - component: {fileID: 236770856}
+  m_Layer: 5
+  m_Name: RetoPantalla
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &236770855
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 236770854}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1926242812}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1000, y: 200}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &236770856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 236770854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.48033106, g: 0.990566, b: 0.61308086, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 6ab80513f29e1a24aafd45367c8b5f00, type: 3}
+    m_FontSize: 30
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 300
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 
+--- !u!222 &236770857
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 236770854}
+  m_CullTransparentMesh: 1
 --- !u!1 &458316381
 GameObject:
   m_ObjectHideFlags: 0
@@ -203,6 +282,7 @@ GameObject:
   - component: {fileID: 458316384}
   - component: {fileID: 458316383}
   - component: {fileID: 458316382}
+  - component: {fileID: 458316385}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -234,6 +314,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6ac977890c6e0a4f9074e086ad47d4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infoText: {fileID: 236770856}
 --- !u!4 &458316384
 Transform:
   m_ObjectHideFlags: 0
@@ -249,6 +330,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &458316385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 458316381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9108aeb18db779b47910d3a9be9d8c60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &460199669
 GameObject:
   m_ObjectHideFlags: 0
@@ -261,7 +354,7 @@ GameObject:
   - component: {fileID: 460199672}
   - component: {fileID: 460199671}
   m_Layer: 5
-  m_Name: Titulo
+  m_Name: Reto
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -319,7 +412,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Ganador!
+  m_Text: Reto
 --- !u!222 &460199672
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -601,9 +694,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3376701528169895703, guid: a92a9701c4347014e92684b79b7115b7, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3376701528169895703, guid: a92a9701c4347014e92684b79b7115b7, type: 3}
+      propertyPath: m_Color.g
+      value: 0.7217375
+      objectReference: {fileID: 0}
+    - target: {fileID: 3376701528169895703, guid: a92a9701c4347014e92684b79b7115b7, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8505365092274858496, guid: a92a9701c4347014e92684b79b7115b7, type: 3}
       propertyPath: m_Name
-      value: Area
+      value: Area amarrilla
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -719,6 +824,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   winnerPanel: {fileID: 1191870077}
+  challenge: {fileID: 0}
 --- !u!4 &1074192457
 Transform:
   m_ObjectHideFlags: 0
@@ -958,7 +1064,7 @@ GameObject:
   - component: {fileID: 1191870079}
   - component: {fileID: 1191870078}
   m_Layer: 5
-  m_Name: Menu
+  m_Name: RetoActivado
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -976,8 +1082,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.9528302, g: 0.030562414, b: 0.4489382, a: 0.392}
+  m_Material: {fileID: 2100000, guid: 54b7bc160f679204f9a9e65ceaeeb727, type: 2}
+  m_Color: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 0.392}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1072,9 +1178,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3376701528169895703, guid: a92a9701c4347014e92684b79b7115b7, type: 3}
+      propertyPath: m_Color.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3376701528169895703, guid: a92a9701c4347014e92684b79b7115b7, type: 3}
+      propertyPath: m_Color.g
+      value: 0.14548154
+      objectReference: {fileID: 0}
+    - target: {fileID: 3376701528169895703, guid: a92a9701c4347014e92684b79b7115b7, type: 3}
+      propertyPath: m_Color.r
+      value: 0.9811321
+      objectReference: {fileID: 0}
     - target: {fileID: 8505365092274858496, guid: a92a9701c4347014e92684b79b7115b7, type: 3}
       propertyPath: m_Name
-      value: Area (3)
+      value: Area rojo
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1129,9 +1247,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3376701528169895703, guid: a92a9701c4347014e92684b79b7115b7, type: 3}
+      propertyPath: m_Color.b
+      value: 0.90138817
+      objectReference: {fileID: 0}
+    - target: {fileID: 3376701528169895703, guid: a92a9701c4347014e92684b79b7115b7, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3376701528169895703, guid: a92a9701c4347014e92684b79b7115b7, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8505365092274858496, guid: a92a9701c4347014e92684b79b7115b7, type: 3}
       propertyPath: m_Name
-      value: Area (1)
+      value: Area rozada
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1170,6 +1300,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1191870080}
+  - {fileID: 236770855}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
