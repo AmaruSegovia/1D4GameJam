@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Android.Types;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 [System.Serializable]
 public class ChallengesData
@@ -10,11 +13,14 @@ public class ChallengesData
 
 public class GameManager : MonoBehaviour
 {
+    public Text infoText;//Referencia al objeto de texto en la escena
     private HashSet<GameObject> pressedObjects = new HashSet<GameObject>();
     private int counter = 0;
     private bool countdownStarted = false;
     private List<string> challenges;
     private List<GameObject> areaObjects; // Lista de objetos "Area"
+
+    
 
     private void Start()
     {
@@ -23,6 +29,11 @@ public class GameManager : MonoBehaviour
 
         // Obtener todos los objetos "Area" y agregarlos a la lista
         areaObjects = new List<GameObject>(GameObject.FindGameObjectsWithTag("Area"));
+
+        //Inicializar el objeto de texto
+        infoText.text = "Presiona los objetos 'Area'";
+
+        
     }
 
     private void LoadChallenges()
@@ -50,6 +61,8 @@ public class GameManager : MonoBehaviour
                 StartCountdown();
             }
         }
+        //Actualizar el texto en la escena
+        infoText.text = pressedObject.name + "presionado, Contador: " + counter;
     }
 
     public void ObjectReleased(GameObject releasedObject)
@@ -109,6 +122,10 @@ public class GameManager : MonoBehaviour
         // Asignar el desafío al objeto "Area"
         AssignChallengeToArea(randomChallenge, randomAreaObject);
         countdownStarted = false;
+        // Mostrar un desafío aleatorio en la escena
+        //infoText.text = $"Reto N° '{randomChallenge}' para {randomAreaObject.name}";
+        // Mostrar un desafío aleatorio con animación en la escena
+        StartCoroutine(AnimateTextReveal($"Reto N° '{randomChallenge}' para {randomAreaObject.name}", infoText, 0.1f));
     }
 
     private GameObject GetRandomAreaObject()
@@ -132,5 +149,15 @@ public class GameManager : MonoBehaviour
         // usar un diccionario para mapear el objeto "Area" con su desafío correspondiente.
         // Ejemplo: dictionaryAreaChallenge[areaObject] = challenge;
         Debug.Log($"Reto N° '{challenge}' para {areaObject.name}");
+    }
+
+    IEnumerator AnimateTextReveal(string textReveal, Text targetText, float revealSpeed)
+    {
+        targetText.text = "";
+        foreach (char character in textReveal)
+        {
+            targetText.text += character;
+            yield return new WaitForSeconds(revealSpeed);
+        }
     }
 }
