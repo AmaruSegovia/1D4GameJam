@@ -8,12 +8,15 @@ public class JuegoManosManager : MonoBehaviour
     public bool isCoinOnTable;
     public GameObject moneda;
 
+
     private void Start()
     {
         moneda = GameObject.Find("Moneda");
+
         isPlayable = true;
         isCoinOnTable = false;
         moneda.SetActive(false);
+
         StartCoroutine(SpawnCoin());
         Debug.Log("Se leyó la línea para iniciar la corrutina");
     }
