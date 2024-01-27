@@ -1,47 +1,68 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
+    [SerializeField] private string playerTag;
     private Rigidbody2D rb;
-    private Transform BoundaryHolder;
-    Boundary playerBoundary;
+    private Transform boundaryHolder;
+    private Boundary playerBoundary;
 
-    struct Boundary
-    {
-        public float Up, Down, Left, Right;
-        public Boundary(float up, float down, float left, float right)
-        {
-            Up = up;
-            Down = down;
-            Left = left;
-            Right = right;
-        }
-    }
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        BoundaryHolder = GameObject.Find("BoundaryHolder").transform;
-        playerBoundary = new Boundary(BoundaryHolder.GetChild(0).position.y,
-                                      BoundaryHolder.GetChild(1).position.y,
-                                      BoundaryHolder.GetChild(2).position.x,
-                                      BoundaryHolder.GetChild(3).position.x );
+
+        // Intenta encontrar el objeto BoundaryHolder
+        GameObject foundObject = GameObject.Find(gameObject.name + "BoundaryHolder");
+
+        // Si se encuentra el objeto BoundaryHolder, obtenemos su transform y almacenamos sus valores en playerBoundary
+        if (foundObject != null)
+        {
+            boundaryHolder = foundObject.transform;
+            playerBoundary = new Boundary(
+                boundaryHolder.GetChild(0).position.y,
+                boundaryHolder.GetChild(1).position.y,
+                boundaryHolder.GetChild(2).position.x,
+                boundaryHolder.GetChild(3).position.x
+            );
+        }
+        else
+        {
+            // Si no se encuentra el objeto, mostramos un mensaje de error
+            Debug.LogError("No se encontró el objeto BoundaryHolder para el jugador " + gameObject.name);
+        }
     }
 
-    private void OnMouseDrag()
+    private void Update()
     {
-        Vector2 newPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        // Limitador de espacio a tocar
-        if (newPosition.x >= -10f && newPosition.x <= 10f && newPosition.y >= -5.4f && newPosition.y <= 5.4f)
-        {
-            // Limitador de movimiento
-            Vector2 clamedMousePos = new Vector2(Mathf.Clamp(newPosition.x,playerBoundary.Left, playerBoundary.Right),
-                                                Mathf.Clamp(newPosition.y,playerBoundary.Down, playerBoundary.Up));
-            rb.MovePosition(clamedMousePos);
-        }
+        MoverJugadorConEntradaTactil();
+    }
 
+    private void MoverJugadorConEntradaTactil()
+    {
+        for (int i = 0; i < Input.touchCount; i++)
+        {
+            Touch tactil = Input.GetTouch(i);
+            Vector2 newPosition = Camera.main.ScreenToWorldPoint(tactil.position);
+
+            // Limitador de espacio a tocar
+            if (newPosition.x >= playerBoundary.Left - 1.5 && newPosition.x <= playerBoundary.Right + 1.5 &&
+                newPosition.y >= -5 && newPosition.y <= 5)
+            {
+                LimitarMovimiento(newPosition);
+            }
+        }
+    }
+
+    private void LimitarMovimiento(Vector2 newPosition)
+    {
+        // Mathf.clamp = restringir el valor, ej: newPosition.x entre playerBoundary.Left y playerBoundary.Right.
+        Vector2 clampedMousePos = new Vector2(Mathf.Clamp(newPosition.x, playerBoundary.Left, playerBoundary.Right), 
+                                              Mathf.Clamp(newPosition.y, playerBoundary.Down, playerBoundary.Up));
+        rb.MovePosition(clampedMousePos); // Mueve el objeto a la posicion restringida
     }
 
 }
