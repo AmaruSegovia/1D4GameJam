@@ -45,6 +45,12 @@ public class InputManos : MonoBehaviour
 
             manager.isPlayable = false;
         }
+
+        ////DEBUG
+        //else
+        //{
+        //    Reiniciar();
+        //}
     }
 
     public void inputJugadorDer()
@@ -68,11 +74,37 @@ public class InputManos : MonoBehaviour
 
             manager.isPlayable = false;
         }
+
+        ////DEBUG
+        //else
+        //{
+        //    Reiniciar();
+        //}
     }
 
     public void MostrarTextos()
     {
         textoBlanco.SetActive(true);
         textoNegro.SetActive(true);
+    }
+
+    //DEBUG, método para reiniciar el juego sin salir
+    public void Reiniciar()
+    {
+        //Reseteo de las variables del manager
+        manager.moneda.SetActive(true);
+        manager.isPlayable = true;
+        manager.isCoinOnTable = true;
+
+        //Reseteo de los textos
+        textoBlanco.GetComponent<TextMeshProUGUI>().text = "";
+        textoNegro.GetComponent<TextMeshProUGUI>().text = "";
+
+        //Reseteo de las posiciones de las patas
+        pataIzq.transform.position = new Vector2(-10, 0);
+        pataDer.transform.position = new Vector2(10, 0);
+
+        //Reinicio de la corrutina para arrancar el juego
+        StartCoroutine(manager.SpawnCoin());
     }
 }
