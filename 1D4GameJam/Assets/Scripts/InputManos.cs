@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using Microsoft.Unity.VisualStudio.Editor;
 using System.Collections;
 using System.Collections.Generic;
@@ -108,3 +110,5 @@ public class InputManos : MonoBehaviour
         StartCoroutine(manager.SpawnCoin());
     }
 }
+
+#endif

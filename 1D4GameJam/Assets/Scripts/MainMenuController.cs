@@ -9,4 +9,8 @@ public class MainMenuController : MonoBehaviour
         SceneManager.LoadScene("SampleScene");
         Debug.Log("Juego comenzado");
     }
+    public void StarChallenges()
+    {
+        SceneManager.LoadScene("Retos");
+    }
 }
