@@ -9,7 +9,7 @@ public class UIController : MonoBehaviour
     [SerializeField] GameObject winnerPanel;
     [SerializeField] Text challenge;
 
-    public void ActivateWinnerPanel(string challenge)
+    public void ActivateWinnerPanel()
     {
         winnerPanel.SetActive(true);
     }
