@@ -14,6 +14,7 @@ public class InputManos : MonoBehaviour
     private JuegoManosManager manager;
     private GameObject pataIzq, pataDer, textoBlanco, textoNegro;
 
+
     private void Start()
     {
         manager = FindObjectOfType<JuegoManosManager>();
@@ -45,6 +46,7 @@ public class InputManos : MonoBehaviour
                 textoBlanco.GetComponent<TextMeshProUGUI>().text = "¡Has ganado :D!";
             }
 
+            manager.gameFinished = true;
             manager.isPlayable = false;
         }
 
@@ -74,14 +76,9 @@ public class InputManos : MonoBehaviour
                 textoNegro.GetComponent<TextMeshProUGUI>().text = "¡Has ganado :D!";
             }
 
+            manager.gameFinished = true;
             manager.isPlayable = false;
         }
-
-        ////DEBUG
-        //else
-        //{
-        //    Reiniciar();
-        //}
     }
 
     public void MostrarTextos()

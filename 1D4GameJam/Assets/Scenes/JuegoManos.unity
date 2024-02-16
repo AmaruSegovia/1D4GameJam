@@ -1266,7 +1266,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Reto a cumplir: < reto >'
+  m_text: 'Reto a cumplir: '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1556,7 +1556,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlayable: 1
   isCoinOnTable: 0
+  gameFinished: 0
   moneda: {fileID: 0}
+  textoReto: {fileID: 0}
 --- !u!4 &2034261017
 Transform:
   m_ObjectHideFlags: 0
