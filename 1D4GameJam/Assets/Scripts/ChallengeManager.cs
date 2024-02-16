@@ -22,36 +22,24 @@ public class ChallengeManager : MonoBehaviour
         public string[] Challenges;
     }
 
-    private string challengesFilePath = "Assets/Resources/Challenges.json"; // Ruta al archivo JSON
-
     void Start()
     {
         LoadChallenges();
-
-        if (challengesData != null)
-        {
-            DisplayCurrentChallenge();
-            DisplayChallengesList();
-        }
+        DisplayCurrentChallenge();
+        DisplayChallengesList();
     }
 
     void LoadChallenges()
     {
-        string json = Resources.Load<TextAsset>("Challenges").text;
-        challengesData = JsonUtility.FromJson<ChallengesData>(json);
-        if (challengesData == null)
+        try
         {
-            Debug.LogError("Error loading challenges. Check if the 'Challenges' JSON file exists and is correctly formatted.");
+            string json = Resources.Load<TextAsset>("Challenges").text;
+            challengesData = JsonUtility.FromJson<ChallengesData>(json);
         }
-    }
-
-    void SaveChallenges()
-    {
-        // Convertir el objeto challengesData a formato JSON
-        string json = JsonUtility.ToJson(challengesData, true);
-
-        // Escribir el JSON en el archivo
-        File.WriteAllText(challengesFilePath, json);
+        catch (System.Exception e)
+        {
+            Debug.LogError("Error loading challenges: " + e.Message);
+        }
     }
 
     void DisplayCurrentChallenge()
@@ -67,11 +55,6 @@ public class ChallengeManager : MonoBehaviour
                 Debug.LogError("Invalid currentChallengeIndex");
             }
         }
-
-        if (challengesListText != null)
-        {
-            DisplayChallengesList();
-        }
     }
 
     void DisplayChallengesList()
@@ -86,7 +69,7 @@ public class ChallengeManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Error displaying challenges list. Check if the variables are assigned and challengesData.Challenges is not null.");
+            Debug.LogWarning("Error displaying challenges list.");
         }
     }
 
@@ -101,13 +84,13 @@ public class ChallengeManager : MonoBehaviour
         string newChallenge = newChallengeInput.text;
         if (!string.IsNullOrEmpty(newChallenge))
         {
-            List<string> challengeList = new List<string>(challengesData.Challenges);
+            var challengeList = new List<string>(challengesData.Challenges);
             challengeList.Add(newChallenge);
             challengesData.Challenges = challengeList.ToArray();
 
             newChallengeInput.text = "";
+            SaveChallenges();
             DisplayChallengesList();
-            SaveChallenges(); // Guardar los cambios en el archivo
         }
     }
 
@@ -115,13 +98,13 @@ public class ChallengeManager : MonoBehaviour
     {
         if (challengesData.Challenges.Length > 0)
         {
-            List<string> challengeList = new List<string>(challengesData.Challenges);
+            var challengeList = new List<string>(challengesData.Challenges);
             challengeList.RemoveAt(challengeList.Count - 1);
             challengesData.Challenges = challengeList.ToArray();
 
             DisplayChallengesList();
             DisplayCurrentChallenge();
-            SaveChallenges(); // Guardar los cambios en el archivo
+            SaveChallenges();
         }
     }
 
@@ -134,7 +117,14 @@ public class ChallengeManager : MonoBehaviour
             DisplayChallengesList();
             DisplayCurrentChallenge();
             editChallengeInput.text = "";
-            SaveChallenges(); // Guardar los cambios en el archivo
+            SaveChallenges();
         }
+    }
+
+    void SaveChallenges()
+    {
+        string json = JsonUtility.ToJson(challengesData, true);
+        var path = System.IO.Path.Combine(Application.dataPath, "Resources/Challenges.json");
+        System.IO.File.WriteAllText(path, json);
     }
 }
