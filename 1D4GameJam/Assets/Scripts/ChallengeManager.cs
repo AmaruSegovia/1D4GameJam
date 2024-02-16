@@ -11,7 +11,7 @@ public class ChallengeManager : MonoBehaviour
     public TMP_InputField editChallengeInput;
     public Button editButtonPrefab;
     public Button deleteButtonPrefab;
-    public Transform buttonParent;
+    public GameObject container; // Nuevo contenedor principal
 
     private List<string> challenges;
     private int currentChallengeIndex = 0;
@@ -62,16 +62,21 @@ public class ChallengeManager : MonoBehaviour
         }
         deleteButtons.Clear();
 
-        foreach (Transform child in buttonParent)
+        // Limpiar el contenedor principal
+        foreach (Transform child in container.transform)
         {
             Destroy(child.gameObject);
         }
 
         // Calcular la posición inicial
-        Vector2 startPosition = buttonParent.position;
+        Vector2 startPosition = Vector2.zero;
 
         // Espaciado entre cada elemento
-        float spacing = 10f;
+        float spacing = 5f;
+
+        // Desplazamiento horizontal de los botones
+        float editButtonOffsetX = 185f; // Desplazamiento para el botón de editar
+        float deleteButtonOffsetX = 130f; // Desplazamiento para el botón de eliminar
 
         // Instanciar los botones y textos uno por uno
         for (int i = 0; i < challenges.Count; i++)
@@ -79,25 +84,45 @@ public class ChallengeManager : MonoBehaviour
             int currentIndex = i; // Capturar el valor actual de 'i' para cada iteración
 
             // Instanciar el texto del reto
-            TextMeshProUGUI challengeTextInstance = Instantiate(challengeText, buttonParent);
+            TextMeshProUGUI challengeTextInstance = Instantiate(challengeText, container.transform);
             challengeTextInstance.text = challenges[i];
             RectTransform challengeTextTransform = challengeTextInstance.GetComponent<RectTransform>();
             challengeTextTransform.anchoredPosition = startPosition - new Vector2(0f, i * (challengeTextTransform.sizeDelta.y + spacing));
             challengeTextTransform.pivot = new Vector2(0.5f, 1f); // Centrar verticalmente respecto a la parte superior
 
             // Instanciar el botón de editar
-            Button editButton = Instantiate(editButtonPrefab, buttonParent);
+            Button editButton = Instantiate(editButtonPrefab, container.transform);
             editButton.onClick.AddListener(() => OnEditButtonClicked(currentIndex)); // Pasar el índice capturado
             RectTransform editButtonTransform = editButton.GetComponent<RectTransform>();
-            editButtonTransform.anchoredPosition = new Vector2(challengeTextTransform.rect.width + spacing, challengeTextTransform.anchoredPosition.y - challengeTextTransform.rect.height / 2f); // A la derecha del texto
+            editButtonTransform.anchoredPosition = challengeTextTransform.anchoredPosition + new Vector2(editButtonOffsetX, 0f); // Desplazar hacia la derecha
             editButtons.Add(editButton);
 
+            // Alinear verticalmente con el texto
+            editButtonTransform.pivot = new Vector2(0, 1);
+            editButtonTransform.anchoredPosition += new Vector2(0, -(challengeTextTransform.rect.height - editButtonTransform.rect.height) / 2f);
+
             // Instanciar el botón de eliminar
-            Button deleteButton = Instantiate(deleteButtonPrefab, buttonParent);
+            Button deleteButton = Instantiate(deleteButtonPrefab, container.transform);
             deleteButton.onClick.AddListener(() => OnDeleteButtonClicked(currentIndex)); // Pasar el índice capturado
             RectTransform deleteButtonTransform = deleteButton.GetComponent<RectTransform>();
-            deleteButtonTransform.anchoredPosition = new Vector2(editButtonTransform.anchoredPosition.x + editButtonTransform.rect.width + spacing, challengeTextTransform.anchoredPosition.y - challengeTextTransform.rect.height / 2f); // A la derecha del botón de editar
+            deleteButtonTransform.anchoredPosition = challengeTextTransform.anchoredPosition + new Vector2(deleteButtonOffsetX, 0f); // Desplazar hacia la derecha
             deleteButtons.Add(deleteButton);
+
+            // Alinear verticalmente con el texto
+            deleteButtonTransform.pivot = new Vector2(0, 1);
+            deleteButtonTransform.anchoredPosition += new Vector2(0, -(challengeTextTransform.rect.height - deleteButtonTransform.rect.height) / 2f);
+            
+            UpdateContentHeight();
+        }
+    }
+
+    void UpdateContentHeight()
+    {
+        // Buscar el componente ScrollViewContent en el objeto Content y llamar a su método UpdateContentHeight
+        ScrollViewContent scrollViewContent = container.GetComponent<ScrollViewContent>();
+        if (scrollViewContent != null)
+        {
+            scrollViewContent.UpdateContentHeight();
         }
     }
 
@@ -112,6 +137,7 @@ public class ChallengeManager : MonoBehaviour
         challenges.RemoveAt(index);
         SaveChallenges();
         DisplayChallengesList();
+        UpdateContentHeight();
     }
 
     public void SaveChallenges()
