@@ -1,29 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System.IO; // Añadido para trabajar con archivos
+using System.IO;
 
 public class ChallengeManager : MonoBehaviour
 {
     public TextMeshProUGUI challengeText;
-    public TMP_InputField newChallengeInput;
-    public TextMeshProUGUI challengesListText;
     public TMP_InputField editChallengeInput;
+    public Button editButtonPrefab;
+    public Button deleteButtonPrefab;
+    public Transform buttonParent;
 
+    private List<string> challenges;
     private int currentChallengeIndex = 0;
-    private ChallengesData challengesData;
+    private List<Button> editButtons = new List<Button>();
+    private List<Button> deleteButtons = new List<Button>();
 
-    [System.Serializable]
-    public class ChallengesData
-    {
-        public string[] Challenges;
-    }
+    private string challengesFilePath;
 
     void Start()
     {
+        challengesFilePath = Path.Combine(Application.dataPath, "Resources/Challenges.json");
         LoadChallenges();
         DisplayCurrentChallenge();
         DisplayChallengesList();
@@ -31,100 +30,117 @@ public class ChallengeManager : MonoBehaviour
 
     void LoadChallenges()
     {
-        try
+        if (File.Exists(challengesFilePath))
         {
-            string json = Resources.Load<TextAsset>("Challenges").text;
-            challengesData = JsonUtility.FromJson<ChallengesData>(json);
+            string json = File.ReadAllText(challengesFilePath);
+            ChallengesData challengesData = JsonUtility.FromJson<ChallengesData>(json);
+            challenges = new List<string>(challengesData.Challenges); // Convertir array a lista
         }
-        catch (System.Exception e)
+        else
         {
-            Debug.LogError("Error loading challenges: " + e.Message);
+            Debug.LogError("Challenges file not found!");
         }
     }
 
     void DisplayCurrentChallenge()
     {
-        if (challengesData != null && challengesData.Challenges != null && challengeText != null)
-        {
-            if (currentChallengeIndex >= 0 && currentChallengeIndex < challengesData.Challenges.Length)
-            {
-                challengeText.text = challengesData.Challenges[currentChallengeIndex];
-            }
-            else
-            {
-                Debug.LogError("Invalid currentChallengeIndex");
-            }
-        }
+        challengeText.text = challenges[currentChallengeIndex];
     }
 
     void DisplayChallengesList()
     {
-        if (challengesData != null && challengesListText != null && challengesData.Challenges != null)
+        // Limpiar los botones y textos existentes
+        foreach (Button button in editButtons)
         {
-            challengesListText.text = "";
-            for (int i = 0; i < challengesData.Challenges.Length; i++)
-            {
-                challengesListText.text += $"{i + 1}. {challengesData.Challenges[i]}\n";
-            }
+            Destroy(button.gameObject);
         }
-        else
+        editButtons.Clear();
+
+        foreach (Button button in deleteButtons)
         {
-            Debug.LogWarning("Error displaying challenges list.");
+            Destroy(button.gameObject);
+        }
+        deleteButtons.Clear();
+
+        foreach (Transform child in buttonParent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // Calcular la posición inicial
+        Vector2 startPosition = buttonParent.position;
+
+        // Espaciado entre cada elemento
+        float spacing = 10f;
+
+        // Instanciar los botones y textos uno por uno
+        for (int i = 0; i < challenges.Count; i++)
+        {
+            int currentIndex = i; // Capturar el valor actual de 'i' para cada iteración
+
+            // Instanciar el texto del reto
+            TextMeshProUGUI challengeTextInstance = Instantiate(challengeText, buttonParent);
+            challengeTextInstance.text = challenges[i];
+            RectTransform challengeTextTransform = challengeTextInstance.GetComponent<RectTransform>();
+            challengeTextTransform.anchoredPosition = startPosition - new Vector2(0f, i * (challengeTextTransform.sizeDelta.y + spacing));
+            challengeTextTransform.pivot = new Vector2(0.5f, 1f); // Centrar verticalmente respecto a la parte superior
+
+            // Instanciar el botón de editar
+            Button editButton = Instantiate(editButtonPrefab, buttonParent);
+            editButton.onClick.AddListener(() => OnEditButtonClicked(currentIndex)); // Pasar el índice capturado
+            RectTransform editButtonTransform = editButton.GetComponent<RectTransform>();
+            editButtonTransform.anchoredPosition = new Vector2(challengeTextTransform.rect.width + spacing, challengeTextTransform.anchoredPosition.y - challengeTextTransform.rect.height / 2f); // A la derecha del texto
+            editButtons.Add(editButton);
+
+            // Instanciar el botón de eliminar
+            Button deleteButton = Instantiate(deleteButtonPrefab, buttonParent);
+            deleteButton.onClick.AddListener(() => OnDeleteButtonClicked(currentIndex)); // Pasar el índice capturado
+            RectTransform deleteButtonTransform = deleteButton.GetComponent<RectTransform>();
+            deleteButtonTransform.anchoredPosition = new Vector2(editButtonTransform.anchoredPosition.x + editButtonTransform.rect.width + spacing, challengeTextTransform.anchoredPosition.y - challengeTextTransform.rect.height / 2f); // A la derecha del botón de editar
+            deleteButtons.Add(deleteButton);
         }
     }
 
-    public void NextChallenge()
+    void OnEditButtonClicked(int index)
     {
-        currentChallengeIndex = (currentChallengeIndex + 1) % challengesData.Challenges.Length;
+        editChallengeInput.text = challenges[index];
+        currentChallengeIndex = index;
+    }
+
+    void OnDeleteButtonClicked(int index)
+    {
+        challenges.RemoveAt(index);
+        SaveChallenges();
+        DisplayChallengesList();
+    }
+
+    public void SaveChallenges()
+    {
+        ChallengesData data = new ChallengesData();
+        data.Challenges = challenges.ToArray();
+
+        string json = JsonUtility.ToJson(data, true); // Agregar el segundo parámetro para formatear el JSON
+        File.WriteAllText(challengesFilePath, json);
+    }
+
+    public void AddChallenge(string newChallenge)
+    {
+        challenges.Add(newChallenge);
+        SaveChallenges();
+        DisplayChallengesList();
+    }
+
+    public void EditChallenge(string editedChallenge)
+    {
+        challenges[currentChallengeIndex] = editedChallenge;
+        SaveChallenges();
         DisplayCurrentChallenge();
+        DisplayChallengesList();
     }
 
-    public void AddChallenge()
+    [System.Serializable]
+    public class ChallengesData
     {
-        string newChallenge = newChallengeInput.text;
-        if (!string.IsNullOrEmpty(newChallenge))
-        {
-            var challengeList = new List<string>(challengesData.Challenges);
-            challengeList.Add(newChallenge);
-            challengesData.Challenges = challengeList.ToArray();
-
-            newChallengeInput.text = "";
-            SaveChallenges();
-            DisplayChallengesList();
-        }
-    }
-
-    public void RemoveChallenge()
-    {
-        if (challengesData.Challenges.Length > 0)
-        {
-            var challengeList = new List<string>(challengesData.Challenges);
-            challengeList.RemoveAt(challengeList.Count - 1);
-            challengesData.Challenges = challengeList.ToArray();
-
-            DisplayChallengesList();
-            DisplayCurrentChallenge();
-            SaveChallenges();
-        }
-    }
-
-    public void EditChallenge()
-    {
-        string editedChallenge = editChallengeInput.text;
-        if (!string.IsNullOrEmpty(editedChallenge) && currentChallengeIndex < challengesData.Challenges.Length)
-        {
-            challengesData.Challenges[currentChallengeIndex] = editedChallenge;
-            DisplayChallengesList();
-            DisplayCurrentChallenge();
-            editChallengeInput.text = "";
-            SaveChallenges();
-        }
-    }
-
-    void SaveChallenges()
-    {
-        string json = JsonUtility.ToJson(challengesData, true);
-        var path = System.IO.Path.Combine(Application.dataPath, "Resources/Challenges.json");
-        System.IO.File.WriteAllText(path, json);
+        public string[] Challenges;
     }
 }

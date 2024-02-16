@@ -749,9 +749,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 229399348}
+      - m_Target: {fileID: 4500160400209319779, guid: eb74d919a79972e4e8638ed16864d366, type: 3}
         m_TargetAssemblyTypeName: MainMenuController, Assembly-CSharp
-        m_MethodName: StarChallenges
+        m_MethodName: StartChallenges
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
