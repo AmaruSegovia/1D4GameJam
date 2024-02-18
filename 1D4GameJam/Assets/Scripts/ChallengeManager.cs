@@ -149,11 +149,31 @@ public class ChallengeManager : MonoBehaviour
         File.WriteAllText(challengesFilePath, json);
     }
 
-    public void AddChallenge(string newChallenge)
+    public void AddChallenge()
     {
-        challenges.Add(newChallenge);
-        SaveChallenges();
-        DisplayChallengesList();
+        // Obtener el nuevo desafío ingresado por el usuario
+        string newChallenge = editChallengeInput.text;
+
+        // Verificar si el nuevo desafío no está vacío
+        if (!string.IsNullOrEmpty(newChallenge))
+        {
+            // Agregar el nuevo desafío a la lista
+            challenges.Add(newChallenge);
+
+            // Guardar los desafíos actualizados en el archivo JSON
+            SaveChallenges();
+
+            // Actualizar la visualización de la lista de desafíos
+            DisplayChallengesList();
+
+            // Limpiar el campo de entrada de texto
+            editChallengeInput.text = "";
+        }
+        else
+        {
+            // Mostrar un mensaje de error si el campo de entrada está vacío
+            Debug.LogWarning("El campo de entrada está vacío. Por favor, ingrese un nuevo desafío.");
+        }
     }
 
     public void EditChallenge(string editedChallenge)
