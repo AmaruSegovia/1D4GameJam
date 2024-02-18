@@ -11,7 +11,9 @@ public class ChallengeManager : MonoBehaviour
     public TMP_InputField editChallengeInput;
     public Button editButtonPrefab;
     public Button deleteButtonPrefab;
-    public GameObject container; // Nuevo contenedor principal
+    public GameObject container;
+    public GameObject editPanel;
+    public GameObject confirmButton;
 
     private List<string> challenges;
     private int currentChallengeIndex = 0;
@@ -130,6 +132,28 @@ public class ChallengeManager : MonoBehaviour
     {
         editChallengeInput.text = challenges[index];
         currentChallengeIndex = index;
+        ActivePanel();
+        confirmButton.SetActive(false);
+    }
+
+    public void ConfirmEditButtonClicked()
+    {
+        string editedChallenge = editChallengeInput.text;
+        EditChallenge(editedChallenge); // Llama al método existente para editar el reto
+    }
+
+    public void TogglePanel()
+    {
+        editPanel.SetActive(!editPanel.activeSelf);
+    }
+    public void ActivePanel()
+    {
+        editPanel.SetActive(true);
+    }
+
+    public void CleanText()
+    {
+        editChallengeInput.text = "";
     }
 
     void OnDeleteButtonClicked(int index)
