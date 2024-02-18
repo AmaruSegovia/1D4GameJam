@@ -19,4 +19,13 @@ public class MainMenuController : MonoBehaviour
     {
         SceneManager.LoadScene("Menu");
     }
+
+    public void QuitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
+    }
 }
