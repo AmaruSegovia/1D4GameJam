@@ -15,6 +15,8 @@ public class ChallengeManager : MonoBehaviour
     public GameObject editPanel;
     public GameObject confirmButton;
 
+
+
     private List<string> challenges;
     private int currentChallengeIndex = 0;
     private List<Button> editButtons = new List<Button>();

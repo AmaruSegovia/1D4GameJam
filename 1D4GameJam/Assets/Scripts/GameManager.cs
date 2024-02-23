@@ -12,6 +12,7 @@ public class ChallengesData
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject PanelReto;
     public Text infoText;//Referencia al objeto de texto en la escena
     private HashSet<GameObject> pressedObjects = new HashSet<GameObject>();
     private int counter = 0;
@@ -104,6 +105,7 @@ public class GameManager : MonoBehaviour
         // Esperar 3 segundos
         yield return new WaitForSeconds(3f);
 
+        PanelReto.SetActive(true);
         // Seleccionar un objeto "Area" aleatorio diferente al último
         GameObject randomAreaObject = GetRandomAreaObject();
 
@@ -124,7 +126,7 @@ public class GameManager : MonoBehaviour
         // Mostrar un desafío aleatorio en la escena
         //infoText.text = $"Reto N° '{randomChallenge}' para {randomAreaObject.name}";
         // Mostrar un desafío aleatorio con animación en la escena
-        StartCoroutine(AnimateTextReveal($"Reto N° '{randomChallenge}' para {randomAreaObject.name}", infoText, 0.1f));
+        StartCoroutine(AnimateTextReveal($"Reto: '{randomChallenge}' para el Sr. {randomAreaObject.name}", infoText, 0.06f));
     }
 
     private GameObject GetRandomAreaObject()
