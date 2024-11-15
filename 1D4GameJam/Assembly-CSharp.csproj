@@ -63,6 +63,7 @@
     <Compile Include="Assets\Scripts\hockey\UI.cs" />
     <Compile Include="Assets\Scripts\Retos\ScrollViewContent.cs" />
     <Compile Include="Assets\Scripts\Retos\TransformObserver.cs" />
+    <Compile Include="Assets\Scripts\Acelerometro\Acelerometro.cs" />
     <Compile Include="Assets\Scripts\InputManos.cs" />
     <Compile Include="Assets\Scripts\hockey\Boundary.cs" />
     <Compile Include="Assets\Scripts\ObjectInteraction.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Assets\Scripts\TouchInputHandler.cs" />
     <Compile Include="Assets\Scripts\Menu\MainMenuController.cs" />
     <Compile Include="Assets\Scripts\hockey\WinCollision.cs" />
+    <Compile Include="Assets\Scripts\Giroscopio\Giroscopio.cs" />
     <Compile Include="Assets\Scripts\InstagramButton.cs" />
     <Compile Include="Assets\Scripts\Retos\PanelManager.cs" />
     <Compile Include="Assets\Scripts\JuegoManosManager.cs" />
