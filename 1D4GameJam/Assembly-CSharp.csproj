@@ -60,30 +60,30 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\CanvasController.cs" />
     <Compile Include="Assets\Scripts\Menu\MoverBoton.cs" />
-    <Compile Include="Assets\Scripts\hockey\UI.cs" />
-    <Compile Include="Assets\Scripts\Retos\ScrollViewContent.cs" />
     <Compile Include="Assets\Scripts\Barman\DragAndDrop.cs" />
-    <Compile Include="Assets\Scripts\Retos\TransformObserver.cs" />
     <Compile Include="Assets\Scripts\Acelerometro\Acelerometro.cs" />
     <Compile Include="Assets\Scripts\InputManos.cs" />
-    <Compile Include="Assets\Scripts\hockey\Boundary.cs" />
-    <Compile Include="Assets\Scripts\ObjectInteraction.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\Scripts\UIController.cs" />
+    <Compile Include="Assets\Scripts\Barman\ObjectPool.cs" />
+    <Compile Include="Assets\Scripts\Giroscopio\Giroscopio.cs" />
+    <Compile Include="Assets\Scripts\Barman\PotionManager.cs" />
+    <Compile Include="Assets\Scripts\hockey\PlayerMove.cs" />
+    <Compile Include="Assets\Scripts\hockey\UI.cs" />
+    <Compile Include="Assets\Scripts\Retos\ScrollViewContent.cs" />
+    <Compile Include="Assets\Scripts\Retos\TransformObserver.cs" />
+    <Compile Include="Assets\Scripts\hockey\Boundary.cs" />
+    <Compile Include="Assets\Scripts\ObjectInteraction.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\ChallengeManager.cs" />
-    <Compile Include="Assets\Scripts\Barman\ObjectPool.cs" />
     <Compile Include="Assets\Scripts\hockey\Contador.cs" />
     <Compile Include="Assets\Scripts\TouchInputHandler.cs" />
     <Compile Include="Assets\Scripts\Menu\MainMenuController.cs" />
     <Compile Include="Assets\Scripts\Barman\PotionShaker.cs" />
     <Compile Include="Assets\Scripts\hockey\WinCollision.cs" />
-    <Compile Include="Assets\Scripts\Giroscopio\Giroscopio.cs" />
     <Compile Include="Assets\Scripts\InstagramButton.cs" />
     <Compile Include="Assets\Scripts\Retos\PanelManager.cs" />
-    <Compile Include="Assets\Scripts\Barman\PotionManager.cs" />
     <Compile Include="Assets\Scripts\JuegoManosManager.cs" />
-    <Compile Include="Assets\Scripts\hockey\PlayerMove.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -733,6 +733,9 @@
     <Reference Include="Unity.2D.IK.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.2D.IK.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.VectorGraphics">
       <HintPath>Library\ScriptAssemblies\Unity.VectorGraphics.dll</HintPath>
     </Reference>
@@ -763,6 +766,9 @@
     <Reference Include="Unity.VectorGraphics.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VectorGraphics.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.VisualScripting.Flow">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Flow.dll</HintPath>
     </Reference>
@@ -771,6 +777,9 @@
     </Reference>
     <Reference Include="Unity.2D.Tilemap.Extras.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Tilemap.Extras.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Core.ShaderLibrary">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Core.ShaderLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Collections">
       <HintPath>Library\ScriptAssemblies\Unity.Collections.dll</HintPath>
@@ -784,6 +793,9 @@
     <Reference Include="Unity.2D.PixelPerfect">
       <HintPath>Library\ScriptAssemblies\Unity.2D.PixelPerfect.dll</HintPath>
     </Reference>
+    <Reference Include="PPv2URPConverters">
+      <HintPath>Library\ScriptAssemblies\PPv2URPConverters.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
     </Reference>
@@ -796,11 +808,20 @@
     <Reference Include="Unity.Profiling.Core">
       <HintPath>Library\ScriptAssemblies\Unity.Profiling.Core.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.AdaptivePerformance.Samsung.Android">
       <HintPath>Library\ScriptAssemblies\Unity.AdaptivePerformance.Samsung.Android.dll</HintPath>
     </Reference>
     <Reference Include="PsdPlugin">
       <HintPath>Library\ScriptAssemblies\PsdPlugin.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="Unity.PlasticSCM.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll</HintPath>
@@ -819,6 +840,9 @@
     </Reference>
     <Reference Include="Unity.AdaptivePerformance.Simulator.Google.Extension">
       <HintPath>Library\ScriptAssemblies\Unity.AdaptivePerformance.Simulator.Google.Extension.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.ShaderGraph.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.ShaderGraph.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.AdaptivePerformance">
       <HintPath>Library\ScriptAssemblies\Unity.AdaptivePerformance.dll</HintPath>
@@ -871,6 +895,9 @@
     <Reference Include="Unity.2D.Common.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Common.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Timeline">
       <HintPath>Library\ScriptAssemblies\Unity.Timeline.dll</HintPath>
     </Reference>
@@ -895,8 +922,14 @@
     <Reference Include="Unity.2D.Common.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Common.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Shaders">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Searcher.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Searcher.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.AdaptivePerformance.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.AdaptivePerformance.Editor.dll</HintPath>
