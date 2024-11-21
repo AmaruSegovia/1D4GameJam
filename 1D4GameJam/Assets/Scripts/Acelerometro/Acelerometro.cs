@@ -27,9 +27,18 @@ public class JuegoRuletaRusa : MonoBehaviour
     // Variables del juego
     private int puntuacion = 0; // Puntos acumulados por el jugador
     private bool estaGirando = false; // Indica si el tambor está girando
+    private bool puedeDisparar = false;
     private int posicionActual = 0; // Cámara actual que se va a disparar
     private bool[] camaras = new bool[6]; // Representa las cámaras del tambor (true = bala)
     private float probabilidadBala = 0.2f; // Probabilidad inicial de que haya una bala (20%)
+
+    //Referencias a los sprites de los cristales
+    [SerializeField] private GameObject cristalBlanco;
+    [SerializeField] private GameObject cristalVerde;
+    [SerializeField] private GameObject cristalRojo;
+
+    //Referencia al animator
+    private Animator mangoAnimator;
 
     void Start()
     {
@@ -43,6 +52,8 @@ public class JuegoRuletaRusa : MonoBehaviour
         // Seleccionar un nombre aleatorio para iniciar
         indiceJugadorActual = Random.Range(0, nombresJugadores.Count);
         textoJugadorActual.text = $"Turno de: {nombresJugadores[indiceJugadorActual]}";
+
+        mangoAnimator = GetComponent<Animator>();
 
         // Generar el estado inicial del tambor
         GenerarTambor();
@@ -78,8 +89,15 @@ public class JuegoRuletaRusa : MonoBehaviour
 
     private IEnumerator GirarTamborRutina()
     {
+
         estaGirando = true;
+        mangoAnimator.SetBool("EstaGirando", true);
         textoGirando.text = "Girando...";
+
+        cristalBlanco.SetActive(true);
+        cristalVerde.SetActive(false);
+        cristalRojo.SetActive(false);
+
         float tiempoGiro = Random.Range(2f, 3f);
 
         for (float t = 0; t < tiempoGiro; t += Time.deltaTime)
@@ -89,7 +107,12 @@ public class JuegoRuletaRusa : MonoBehaviour
         }
 
         posicionActual = Random.Range(0, camaras.Length);
+
         estaGirando = false;
+        mangoAnimator.SetBool("EstaGirando", false);
+
+        puedeDisparar = true;
+
         textoGirando.text = "";
 
         MostrarEstadoCamaras();
@@ -97,24 +120,38 @@ public class JuegoRuletaRusa : MonoBehaviour
 
     public void Disparar()
     {
-        if (camaras[posicionActual])
+        if (puedeDisparar)
         {
-            textoResultado.text = $"¡Bala! {nombresJugadores[indiceJugadorActual]} ha perdido.";
-            Handheld.Vibrate();
-            sonidoDisparo.PlayOneShot(clipBala);
-        }
-        else
-        {
-            puntuacion++;
-            textoResultado.text = $"Click... ¡Salvaste, {nombresJugadores[indiceJugadorActual]}! Puntos: {puntuacion}";
-            sonidoDisparo.PlayOneShot(clipClick[Random.Range(0, clipClick.Length)]);
+            if (camaras[posicionActual])
+            {
+                textoResultado.text = $"¡Bala! {nombresJugadores[indiceJugadorActual]} ha perdido.";
+                Handheld.Vibrate();
+                sonidoDisparo.PlayOneShot(clipBala);
 
-            // Pasar al siguiente jugador
-            PasarAlSiguienteJugador();
+                cristalRojo.SetActive(true);
+                cristalVerde.SetActive(false);
+                cristalBlanco.SetActive(false);
 
-            // Aumentar la probabilidad de bala y generar el nuevo tambor
-            AumentarProbabilidad();
-            GenerarTambor();
+                puedeDisparar = false;
+            }
+            else
+            {
+                puntuacion++;
+                textoResultado.text = $"Click... ¡Salvaste, {nombresJugadores[indiceJugadorActual]}! Puntos: {puntuacion}";
+                sonidoDisparo.PlayOneShot(clipClick[Random.Range(0, clipClick.Length)]);
+
+                cristalVerde.SetActive(true);
+                cristalRojo.SetActive(false);
+                cristalBlanco.SetActive(false);
+
+                // Pasar al siguiente jugador
+                PasarAlSiguienteJugador();
+
+                // Aumentar la probabilidad de bala y generar el nuevo tambor
+                AumentarProbabilidad();
+                GenerarTambor();
+                puedeDisparar = false;
+            }
         }
     }
 

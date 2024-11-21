@@ -219,7 +219,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 393856653}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -469,7 +469,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &993094425
 RectTransform:
   m_ObjectHideFlags: 0
@@ -487,7 +487,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 279, y: -41}
+  m_AnchoredPosition: {x: -285.9, y: 147.8}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &993094426
@@ -1130,7 +1130,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1453449369
 Transform:
   m_ObjectHideFlags: 0
@@ -1285,7 +1285,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0000038147, y: 0.0000061691}
+  m_AnchoredPosition: {x: -7.3, y: -0.7}
   m_SizeDelta: {x: 193.3573, y: 139.6027}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1488526860
@@ -1554,8 +1554,8 @@ Transform:
   m_GameObject: {fileID: 1612394915}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -400, y: -225, z: 0}
-  m_LocalScale: {x: 0.625, y: 0.625, z: 0.625}
+  m_LocalPosition: {x: -399.93, y: -211.66, z: 0}
+  m_LocalScale: {x: 0.71963495, y: 0.59470236, z: 0.625}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 391005190}
@@ -1602,7 +1602,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -2
   m_Sprite: {fileID: 21300000, guid: e123c47d45b63e74481c56bbefaaff24, type: 3}
-  m_Color: {r: 0.6226415, g: 0.6226415, b: 0.6226415, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1629,7 +1629,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1870347376
 Transform:
   m_ObjectHideFlags: 0
@@ -1991,6 +1991,7 @@ GameObject:
   - component: {fileID: 2101516492}
   - component: {fileID: 2101516493}
   - component: {fileID: 2101516495}
+  - component: {fileID: 2101516496}
   m_Layer: 0
   m_Name: Mango
   m_TagString: Untagged
@@ -2038,7 +2039,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 29
   m_Sprite: {fileID: 21300000, guid: db07acb18445b464bbc94987ddcd1d1a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2059,12 +2060,12 @@ Transform:
   m_GameObject: {fileID: 2101516488}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.704775, w: 0.709431}
-  m_LocalPosition: {x: -397.5, y: -225, z: 0}
-  m_LocalScale: {x: 1.2, y: 1.2, z: 0.625}
+  m_LocalPosition: {x: -397.78, y: -211.85, z: 0}
+  m_LocalScale: {x: 1.1549066, y: 1.1549066, z: 0.60151386}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1453449369}
   - {fileID: 1870347376}
+  - {fileID: 1453449369}
   - {fileID: 1060284602}
   m_Father: {fileID: 391005190}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 89.623}
@@ -2094,6 +2095,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: bdbbcf9e4c7516746991f2cf08b76265, type: 3}
   - {fileID: 8300000, guid: bdbbcf9e4c7516746991f2cf08b76265, type: 3}
   - {fileID: 8300000, guid: bdbbcf9e4c7516746991f2cf08b76265, type: 3}
+  cristalBlanco: {fileID: 1870347375}
+  cristalVerde: {fileID: 1453449368}
+  cristalRojo: {fileID: 1060284601}
 --- !u!82 &2101516493
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2336,6 +2340,27 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!95 &2101516496
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2101516488}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 096752a6f2ed146438c2555f99104b29, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
