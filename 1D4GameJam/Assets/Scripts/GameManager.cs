@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,11 +20,11 @@ public class GameManager : MonoBehaviour
     private List<string> challenges;
     private List<GameObject> areaObjects; // Lista de objetos "Area"
 
-    
+
 
     private void Start()
     {
-        // Cargar los desafíos desde el archivo JSON
+        // Cargar los desafï¿½os desde el archivo JSON
         LoadChallenges();
 
         // Obtener todos los objetos "Area" y agregarlos a la lista
@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
         //Inicializar el objeto de texto
         infoText.text = "Presiona los objetos 'Area'";
 
-        
+
     }
 
     private void LoadChallenges()
@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
             // Mostrar por consola que el objeto fue presionado y el contador actual
             Debug.Log(pressedObject.name + " presionado. Contador: " + counter);
 
-            // Verificar si todos los objetos están presionados
+            // Verificar si todos los objetos estï¿½n presionados
             if (counter == GetTotalObjects())
             {
                 StartCountdown();
@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
 
     private int GetTotalObjects()
     {
-        // Obtener el número total de objetos "Area" en la escena
+        // Obtener el nï¿½mero total de objetos "Area" en la escena
         return areaObjects.Count;
     }
 
@@ -92,13 +92,70 @@ public class GameManager : MonoBehaviour
             countdownStarted = true;
             Debug.Log("Comenzando contador de 3 segundos...");
 
-            // Iniciar la corrutina para esperar 3 segundos antes de mostrar el desafío
+            // Iniciar la corrutina para esperar 3 segundos antes de mostrar el desafï¿½o
+            StartCoroutine(ChooseNextActionAfterCountdown());
+        }
+    }
+
+    private IEnumerator ChooseNextActionAfterCountdown()
+    {
+        // Esperando 3 seg. antes de tomar una accion
+        yield return new WaitForSeconds(3f);
+
+        // Elejir aleatoriamente entre 2 acciones
+        int actionChoice = Random.Range(0, 2); // 0: desafio, 1: minijuego
+
+        if (actionChoice == 0)
+        {
+            // Continuar con el desafÃ­o
             StartCoroutine(ShowChallengeAfterCountdown());
+        }
+        else
+        {
+            // Minijuegos
+            StartCoroutine(SwitchRandomScene());
         }
     }
 
     private string lastChallenge;
-    private GameObject lastAreaObject; // Último objeto "Area" seleccionado
+    private GameObject lastAreaObject; // ï¿½ltimo objeto "Area" seleccionado
+
+    private IEnumerator SwitchRandomScene()
+    {
+        // Seleccionar dos "jugadoresArea" aleatorios distintos
+        GameObject firstAreaObject = GetRandomAreaObject();
+        GameObject secondAreaObject = GetRandomAreaObject();
+
+        // Asegurarse de que sean distintos
+        while (firstAreaObject == secondAreaObject)
+        {
+            secondAreaObject = GetRandomAreaObject();
+        }
+
+        // Almacenar los objetos seleccionados
+        lastAreaObject = firstAreaObject;
+
+        // Mostrar los nombres de los objetos en la consola
+        Debug.Log($"Jugador 1: Sr. {firstAreaObject.name}");
+        Debug.Log($"Jugador 2: Sr. {secondAreaObject.name}");
+
+        // Mostrar el texto de la UI con el nombre de la escena
+        string sceneName = GetRandomSceneName();
+        infoText.text = $"Minijuego: {sceneName}";
+
+        // Esperando 3 seg. para cambiar de escena
+        yield return new WaitForSeconds(3f);
+
+        // Cambiando de escena 
+        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneName);
+    }
+    // Elegir aleatoriamente entre las escenas
+    private string GetRandomSceneName()
+    {
+        string[] scenes = { "JuegoHockey", "JuegoManos", "JuegoBarman", "JuegoRuletaRusa" };
+        int randomIndex = Random.Range(0, scenes.Length);
+        return scenes[randomIndex];
+    }
 
     private IEnumerator ShowChallengeAfterCountdown()
     {
@@ -106,10 +163,10 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(3f);
 
         PanelReto.SetActive(true);
-        // Seleccionar un objeto "Area" aleatorio diferente al último
+        // Seleccionar un objeto "Area" aleatorio diferente al ï¿½ltimo
         GameObject randomAreaObject = GetRandomAreaObject();
 
-        // Verificar si es diferente al último objeto "Area"
+        // Verificar si es diferente al ï¿½ltimo objeto "Area"
         while (randomAreaObject == lastAreaObject)
         {
             randomAreaObject = GetRandomAreaObject();
@@ -117,15 +174,15 @@ public class GameManager : MonoBehaviour
 
         lastAreaObject = randomAreaObject;
 
-        // Mostrar un desafío aleatorio
+        // Mostrar un desafï¿½o aleatorio
         string randomChallenge = GetRandomChallenge();
 
-        // Asignar el desafío al objeto "Area"
+        // Asignar el desafï¿½o al objeto "Area"
         AssignChallengeToArea(randomChallenge, randomAreaObject);
         countdownStarted = false;
-        // Mostrar un desafío aleatorio en la escena
-        //infoText.text = $"Reto N° '{randomChallenge}' para {randomAreaObject.name}";
-        // Mostrar un desafío aleatorio con animación en la escena
+        // Mostrar un desafï¿½o aleatorio en la escena
+        //infoText.text = $"Reto Nï¿½ '{randomChallenge}' para {randomAreaObject.name}";
+        // Mostrar un desafï¿½o aleatorio con animaciï¿½n en la escena
         StartCoroutine(AnimateTextReveal($"Reto: '{randomChallenge}' para el Sr. {randomAreaObject.name}", infoText, 0.06f));
     }
 
@@ -138,18 +195,18 @@ public class GameManager : MonoBehaviour
 
     private string GetRandomChallenge()
     {
-        // Obtener un desafío aleatorio de la lista
+        // Obtener un desafï¿½o aleatorio de la lista
         int randomIndex = Random.Range(0, challenges.Count);
         return challenges[randomIndex];
     }
 
     private void AssignChallengeToArea(string challenge, GameObject areaObject)
     {
-        // Aquí puedes implementar la lógica para asignar el desafío al objeto "Area".
-        // Puedes tener un componente específico para manejar el desafío en cada objeto "Area" o
-        // usar un diccionario para mapear el objeto "Area" con su desafío correspondiente.
+        // Aquï¿½ puedes implementar la lï¿½gica para asignar el desafï¿½o al objeto "Area".
+        // Puedes tener un componente especï¿½fico para manejar el desafï¿½o en cada objeto "Area" o
+        // usar un diccionario para mapear el objeto "Area" con su desafï¿½o correspondiente.
         // Ejemplo: dictionaryAreaChallenge[areaObject] = challenge;
-        Debug.Log($"Reto N° '{challenge}' para {areaObject.name}");
+        Debug.Log($"Reto Nï¿½ '{challenge}' para {areaObject.name}");
     }
 
     IEnumerator AnimateTextReveal(string textReveal, Text targetText, float revealSpeed)
@@ -162,4 +219,3 @@ public class GameManager : MonoBehaviour
         }
     }
 }
-

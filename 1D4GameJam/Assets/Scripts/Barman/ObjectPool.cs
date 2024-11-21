@@ -24,7 +24,7 @@ public class ObjectPool : MonoBehaviour
 
         for (int i = 0; i < ingredientPrefabs.Length; i++)
         {
-            Vector3 spawnPosition = new Vector3(startX + i * gap, -4f, 0);
+            Vector3 spawnPosition = new Vector3(startX + i * gap, -3f, 0);
             GameObject ingredient = Instantiate(ingredientPrefabs[i], spawnPosition, Quaternion.identity);
             ingredient.SetActive(false);
 
