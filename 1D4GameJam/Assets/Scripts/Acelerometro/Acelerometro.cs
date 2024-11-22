@@ -13,6 +13,8 @@ public class JuegoRuletaRusa : MonoBehaviour
     public Text textoDebugCamaras; // Para mostrar la cámara actual en el modo desarrollador
     public Text textoJugadorActual; // Nuevo texto para mostrar el jugador actual
     public Transform tamborTransform;
+    public GameManager gameManagerScript;
+    [SerializeField] public GameObject gameManager;
 
     // Sonidos
     [SerializeField] AudioSource sonidoGiro;
@@ -42,6 +44,9 @@ public class JuegoRuletaRusa : MonoBehaviour
 
     void Start()
     {
+        //Accediendo al script del Game Manager
+        gameManagerScript = gameManager.GetComponent<GameManager>();
+
         // Configurar los botones y el texto al inicio
         botonGirar.onClick.AddListener(GirarTambor);
         botonDisparar.onClick.AddListener(Disparar);
@@ -133,6 +138,7 @@ public class JuegoRuletaRusa : MonoBehaviour
                 cristalBlanco.SetActive(false);
 
                 puedeDisparar = false;
+                gameManagerScript.ShowChallenge(nombresJugadores[indiceJugadorActual]);
             }
             else
             {

@@ -186,6 +186,18 @@ public class GameManager : MonoBehaviour
         StartCoroutine(AnimateTextReveal($"Reto: '{randomChallenge}' para el Sr. {randomAreaObject.name}", infoText, 0.06f));
     }
 
+    public void ShowChallenge(string jugador)
+    {
+
+        PanelReto.SetActive(true);
+        
+        // Mostrar un desaf�o aleatorio
+        string randomChallenge = GetRandomChallenge();
+
+        // Mostrar un desaf�o aleatorio con animaci�n en la escena
+        StartCoroutine(AnimateTextReveal($"Reto: {randomChallenge} para {jugador}", infoText, 0.06f));
+    }
+
     private GameObject GetRandomAreaObject()
     {
         // Obtener un objeto "Area" aleatorio de la lista

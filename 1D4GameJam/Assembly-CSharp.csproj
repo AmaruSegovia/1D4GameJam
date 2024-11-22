@@ -76,6 +76,7 @@
     <Compile Include="Assets\Scripts\hockey\Boundary.cs" />
     <Compile Include="Assets\Scripts\ObjectInteraction.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\SceneChanger.cs" />
     <Compile Include="Assets\Scripts\ChallengeManager.cs" />
     <Compile Include="Assets\Scripts\hockey\Contador.cs" />
     <Compile Include="Assets\Scripts\TouchInputHandler.cs" />
