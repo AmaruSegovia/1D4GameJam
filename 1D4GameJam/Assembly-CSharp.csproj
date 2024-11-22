@@ -72,6 +72,7 @@
     <Compile Include="Assets\Scripts\hockey\UI.cs" />
     <Compile Include="Assets\Scripts\Retos\ScrollViewContent.cs" />
     <Compile Include="Assets\Scripts\Retos\TransformObserver.cs" />
+    <Compile Include="Assets\Scripts\Barman\TextObjectActivator.cs" />
     <Compile Include="Assets\Scripts\hockey\Boundary.cs" />
     <Compile Include="Assets\Scripts\ObjectInteraction.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />

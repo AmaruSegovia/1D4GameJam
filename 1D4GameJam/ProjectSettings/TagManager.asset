@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Potion
+  - Ingrediente
   layers:
   - Default
   - TransparentFX

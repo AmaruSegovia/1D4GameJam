@@ -17,22 +17,40 @@ public class ObjectPool : MonoBehaviour
     }
 
     // Inicializar el pool con los ingredientes a
-    public void InitializePool(float startX, float gap)
+    public void InitializePool(Vector3 startPosition, int rows, int columns, float gapX, float gapY)
     {
         pooledObjects.Clear();
         originalPositions.Clear();
 
-        for (int i = 0; i < ingredientPrefabs.Length; i++)
-        {
-            Vector3 spawnPosition = new Vector3(startX + i * gap, -3f, 0);
-            GameObject ingredient = Instantiate(ingredientPrefabs[i], spawnPosition, Quaternion.identity);
-            ingredient.SetActive(false);
+        int ingredientIndex = 0; // Para iterar sobre los prefabs
 
-            // Almacenar la posición original
-            originalPositions.Add(ingredient, spawnPosition);
-            pooledObjects.Add(ingredient);
+        for (int row = 0; row < rows; row++)
+        {
+            for (int column = 0; column < columns; column++)
+            {
+                if (ingredientIndex >= ingredientPrefabs.Length)
+                    return; // Si ya no hay más prefabs, terminamos.
+
+                // Calcular la posición de cada ingrediente
+                Vector3 spawnPosition = new Vector3(
+                    startPosition.x + column * gapX,
+                    startPosition.y - row * gapY,
+                    startPosition.z
+                );
+
+                // Instanciar el ingrediente
+                GameObject ingredient = Instantiate(ingredientPrefabs[ingredientIndex], spawnPosition, Quaternion.identity);
+                ingredient.SetActive(false);
+
+                // Guardar posición original y añadir al pool
+                originalPositions.Add(ingredient, spawnPosition);
+                pooledObjects.Add(ingredient);
+
+                ingredientIndex++; // Siguiente ingrediente
+            }
         }
     }
+
 
     // Obtener un ingrediente del pool
     public GameObject GetPooledObject(string ingredientID)

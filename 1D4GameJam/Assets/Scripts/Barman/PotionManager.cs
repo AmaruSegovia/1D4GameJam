@@ -1,30 +1,45 @@
 using UnityEngine;
-using System.Collections.Generic;
 using UnityEngine.UI;
+using System.Collections.Generic;
+using UnityEngine.Rendering.Universal;
 
 public class PotionManager : MonoBehaviour
 {
     public static PotionManager Instance;
     public GameObject potionPrefab;
     public Slider timerSlider;
-    public float gameDuration = 30f;
+    private float gameDuration = 25f;
+    [SerializeField] TextObjectActivator textActivator;
+    // UI Elements
+    [Header("UI Elements")]
+    public Text ingredientListText;         // Texto para mostrar la lista de ingredientes
+    public Image colorTargetImage;          // Imagen para mostrar el color objetivo
+    public Text currentPlayerText;          // Texto para mostrar el jugador actual
+    public GameObject losePanel;            // Panel que se muestra al perder
 
-    // Lista de colores objetivos
+    // Players
+    private List<string> players = new List<string> { "Carpincho", "Gato", "Pingüino", "Zorro" };
+    private int currentPlayerIndex = 0;
+
+    // Color Objective
     private List<Color> colorTargets = new List<Color> { Color.red, Color.blue, Color.green, Color.yellow, Color.cyan, Color.magenta };
     private Color currentTargetColor;
-    public float colorTolerance = 0.1f; // Margen de tolerancia para el color
+    public float colorTolerance = 0.1f;
 
+    // Ingredients
     private List<string> ingredientOrder = new List<string>();
     private int currentIndex = 0;
+
     private float timeRemaining;
     private bool isGameOver = false;
     private bool isShakingPhase = false;
 
+    private PotionColorShaker potionShaker;
+
     public Transform posicionInicio;
 
-    public float gap = -1.5f;
-
-    private PotionColorShaker potionShaker;
+    public Transform posicionInicioPocion;
+    public float gap = -2f;
 
     private void Awake()
     {
@@ -40,24 +55,21 @@ public class PotionManager : MonoBehaviour
 
     void Start()
     {
-        Screen.autorotateToPortrait = true;
+        int rows = 2;     // Número de filas
+        int columns = 3;  // Número de columnas
+        float gapX = 3.5f; // Espaciado horizontal entre ingredientes
+        float gapY = 2.75f; // Espaciado vertical entre ingredientes
 
-        Screen.autorotateToPortraitUpsideDown = true;
+        ObjectPool.Instance.InitializePool(posicionInicio.position, rows, columns, gapX, gapY);
 
-        Screen.autorotateToLandscapeLeft = false;
+        GameObject potion = Instantiate(potionPrefab, posicionInicioPocion);
 
-        Screen.autorotateToLandscapeRight = false;
-
-        Screen.orientation = ScreenOrientation.AutoRotation;
-
-        ObjectPool.Instance.InitializePool(posicionInicio.position.x, gap);
-
-        // Instanciar la poción y obtener el script de agitación
-        GameObject potion = Instantiate(potionPrefab, Vector3.zero, Quaternion.identity);
         potionShaker = potion.GetComponent<PotionColorShaker>();
 
         StartNewGame();
     }
+
+
 
     private void Update()
     {
@@ -66,25 +78,40 @@ public class PotionManager : MonoBehaviour
             UpdateTimer();
         }
 
-        // Si estamos en la fase de agitar, comprobar el color
         if (isShakingPhase)
         {
             CheckPotionColor();
         }
     }
 
+
+
     private void StartNewGame()
     {
         Debug.Log("Iniciando un nuevo juego...");
-        ObjectPool.Instance.ResetPool();
+        // Cambiar al siguiente jugador
+        currentPlayerIndex = (currentPlayerIndex + 1) % players.Count;
+        string currentPlayerName = players[currentPlayerIndex];
+        currentPlayerText.text = currentPlayerName;
+        if (textActivator != null)
+        {
+            textActivator.inputText.text = currentPlayerName;
+            textActivator.UpdateObjects(); // Activar/Desactivar imágenes
+        }
 
+        // Reiniciar los ingredientes
+        ObjectPool.Instance.ResetPool();
         currentIndex = 0;
         ingredientOrder.Clear();
+
+
+        // Generar ingredientes aleatorios y color objetivo
         GenerateRandomOrder();
+        ShowIngredientList();
         ShowSequence();
 
-        // Seleccionar un color objetivo aleatorio
         currentTargetColor = colorTargets[Random.Range(0, colorTargets.Count)];
+        colorTargetImage.color = currentTargetColor;
         Debug.Log($"Color objetivo: {ColorUtility.ToHtmlStringRGB(currentTargetColor)}");
 
         timeRemaining = gameDuration;
@@ -92,21 +119,38 @@ public class PotionManager : MonoBehaviour
         timerSlider.value = gameDuration;
         isGameOver = false;
         isShakingPhase = false;
+
+        losePanel.SetActive(false);
+        isGameOver = false;
+        isShakingPhase = false;
     }
 
     private void GenerateRandomOrder()
     {
         List<string> ingredientNames = new List<string>();
+
+        // Agregar todos los nombres de los ingredientes del pool
         foreach (var ingredient in ObjectPool.Instance.ingredientPrefabs)
         {
             ingredientNames.Add(ingredient.name);
         }
 
-        while (ingredientNames.Count > 0)
+        // Asegurarnos de que seleccionamos un máximo de 3 ingredientes
+        int ingredientsToPick = Mathf.Min(3, ingredientNames.Count);
+
+        ingredientOrder.Clear(); // Reinicia la lista para el nuevo juego
+
+        for (int i = 0; i < ingredientsToPick; i++)
         {
             int randomIndex = Random.Range(0, ingredientNames.Count);
             ingredientOrder.Add(ingredientNames[randomIndex]);
-            ingredientNames.RemoveAt(randomIndex);
+            ingredientNames.RemoveAt(randomIndex); // Evitar duplicados
+        }
+
+        Debug.Log("Ingredientes generados aleatoriamente:");
+        foreach (var ingredient in ingredientOrder)
+        {
+            Debug.Log(ingredient);
         }
     }
 
@@ -118,11 +162,18 @@ public class PotionManager : MonoBehaviour
             Debug.Log(name);
         }
     }
+    private void ShowIngredientList()
+    {
+        ingredientListText.text = "";
+        foreach (var name in ingredientOrder)
+        {
+            ingredientListText.text += $"{name}\n";
+        }
+    }
 
     public bool CheckIngredient(string ingredientID)
     {
         if (isGameOver) return false;
-
         Debug.Log($"Verificando ingrediente: {ingredientID}");
         Debug.Log($"Ingrediente esperado: {ingredientOrder[currentIndex]}");
 
@@ -146,24 +197,22 @@ public class PotionManager : MonoBehaviour
         }
     }
 
+
+
     private void CheckPotionColor()
     {
-        // Verificar si ya se ganó o si el juego ha terminado
         if (isGameOver) return;
 
-        // Obtener el hue actual de la poción
         float currentHue = potionShaker.GetCurrentHue();
         float targetHue;
         Color.RGBToHSV(currentTargetColor, out targetHue, out _, out _);
 
-        // Comprobar si el hue actual está dentro del margen de tolerancia
         if (Mathf.Abs(currentHue - targetHue) < colorTolerance)
         {
             Debug.Log("¡Color correcto! Has ganado.");
             WinGame();
         }
     }
-
 
     private void UpdateTimer()
     {
@@ -178,20 +227,21 @@ public class PotionManager : MonoBehaviour
 
     private void WinGame()
     {
-        if (isGameOver) return; // Asegurarnos de que no se llame varias veces
+        if (isGameOver) return;
         isGameOver = true;
 
         Debug.Log("¡Has ganado!");
-
-        // Reiniciar el juego después de un breve retraso
+        gameDuration -= 0.75f;
+        Debug.Log("Nuevo tiempo de duracion: " + gameDuration);
         Invoke("StartNewGame", 2f);
     }
 
-
     private void LoseGame()
     {
-        Debug.Log("¡Perdiste!");
+        if (isGameOver) return;
         isGameOver = true;
-        Invoke("StartNewGame", 2f);
+
+        Debug.Log("¡Perdiste!");
+        losePanel.SetActive(true);
     }
 }
