@@ -15,7 +15,7 @@ public class UIController : MonoBehaviour
     }
     public void RestartCurrentScene()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Tablero");
         Debug.Log("Se recargo la escena");
     }
     public void GoToMainMenu()

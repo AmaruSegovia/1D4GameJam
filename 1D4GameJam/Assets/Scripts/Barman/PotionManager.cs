@@ -20,8 +20,9 @@ public class PotionManager : MonoBehaviour
     private bool isGameOver = false;
     private bool isShakingPhase = false;
 
-    private float startX = -4f;
-    private float gap = -2f;
+    public Transform posicionInicio;
+
+    public float gap = -1.5f;
 
     private PotionColorShaker potionShaker;
 
@@ -39,7 +40,17 @@ public class PotionManager : MonoBehaviour
 
     void Start()
     {
-        ObjectPool.Instance.InitializePool(startX, gap);
+        Screen.autorotateToPortrait = true;
+
+        Screen.autorotateToPortraitUpsideDown = true;
+
+        Screen.autorotateToLandscapeLeft = false;
+
+        Screen.autorotateToLandscapeRight = false;
+
+        Screen.orientation = ScreenOrientation.AutoRotation;
+
+        ObjectPool.Instance.InitializePool(posicionInicio.position.x, gap);
 
         // Instanciar la poción y obtener el script de agitación
         GameObject potion = Instantiate(potionPrefab, Vector3.zero, Quaternion.identity);

@@ -1,8 +1,11 @@
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class PotionColorShaker : MonoBehaviour
 {
     public SpriteRenderer potionRenderer;
+    private Light2D luzSprite;
+    [SerializeField] Light2D luzPocion;
     public float shakeThreshold = 2.0f;
     public float hueChangeSpeed = 0.1f;
 
@@ -14,6 +17,7 @@ public class PotionColorShaker : MonoBehaviour
         {
             potionRenderer = GetComponent<SpriteRenderer>();
         }
+        luzSprite = GetComponent<Light2D>();
     }
 
     void Update()
@@ -22,6 +26,8 @@ public class PotionColorShaker : MonoBehaviour
         if (acceleration.magnitude > shakeThreshold)
         {
             ChangePotionColor();
+            luzSprite.color = Color.HSVToRGB(currentHue,1f,1f);
+            luzPocion.color = Color.HSVToRGB(currentHue, 1f, 1f);
         }
     }
 
