@@ -20,6 +20,30 @@ public class MainMenuController : MonoBehaviour
         SceneManager.LoadScene("Menu");
     }
 
+    public void StarScenes()
+    {
+        SceneManager.LoadScene("Escenas");
+    }
+
+    public void StarPociones()
+    {
+        SceneManager.LoadScene("JuegoBarman");
+    }
+
+    public void StarHockey()
+    {
+        SceneManager.LoadScene("JuegoHockey");
+    }
+    public void StarLinterna()
+    {
+        SceneManager.LoadScene("JuegoRuletaRusa");
+    }
+    public void StarManos()
+    {
+        SceneManager.LoadScene("JuegoManos");
+    }
+
+
     public void QuitGame()
     {
 #if UNITY_EDITOR
