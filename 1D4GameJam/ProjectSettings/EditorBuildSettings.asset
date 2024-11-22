@@ -6,14 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Menu.unity
-    guid: bdc1ad23aacf3a744a82b94bc03e1135
-  - enabled: 1
-    path: Assets/Scenes/Tablero.unity
-    guid: 3fc8acdd13e6c734bafef6554d6fdbcd
-  - enabled: 1
-    path: Assets/Scenes/Retos.unity
-    guid: 79fe03e82a918d04ba3303520262e0d5
+    path: Assets/Scenes/JuegoBarman.unity
+    guid: cb525456dd69c5449858a57de93dcaed
   - enabled: 1
     path: Assets/Scenes/JuegoHockey.unity
     guid: 21939656cf8ee044fa9f88b75531bed3
@@ -21,11 +15,17 @@ EditorBuildSettings:
     path: Assets/Scenes/JuegoManos.unity
     guid: 8c316b3ec278a734387653b03173de28
   - enabled: 1
-    path: Assets/Scenes/JuegoBarman.unity
-    guid: cb525456dd69c5449858a57de93dcaed
-  - enabled: 1
     path: Assets/Scenes/JuegoRuletaRusa.unity
     guid: 6a083f46ccfb07a40942fd442b7b6310
+  - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: bdc1ad23aacf3a744a82b94bc03e1135
+  - enabled: 1
+    path: Assets/Scenes/Retos.unity
+    guid: 79fe03e82a918d04ba3303520262e0d5
+  - enabled: 1
+    path: Assets/Scenes/Tablero.unity
+    guid: 3fc8acdd13e6c734bafef6554d6fdbcd
   m_configObjects:
     com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000, guid: 7ab05754bd2770a4cae545a9ba4b28e7, type: 2}
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 435084b96a39c93419a7696a9cc84282, type: 2}
