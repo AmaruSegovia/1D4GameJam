@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
@@ -38,10 +39,23 @@ public class GameManager : MonoBehaviour
 
     private void LoadChallenges()
     {
-        TextAsset jsonFile = Resources.Load<TextAsset>("Challenges");
-        ChallengesData challengesData = JsonUtility.FromJson<ChallengesData>(jsonFile.text);
-        challenges = challengesData.Challenges;
+        // Ruta del archivo JSON en persistentDataPath
+        string challengesFilePath = Path.Combine(Application.persistentDataPath, "Challenges.json");
+
+        // Verifica si el archivo existe
+        if (File.Exists(challengesFilePath))
+        {
+            string json = File.ReadAllText(challengesFilePath);
+            ChallengesData challengesData = JsonUtility.FromJson<ChallengesData>(json);
+            challenges = new List<string>(challengesData.Challenges);
+        }
+        else
+        {
+            Debug.LogError("El archivo Challenges.json no fue encontrado en persistentDataPath.");
+            challenges = new List<string>(); // Evita errores si el archivo no existe
+        }
     }
+
 
     public void ObjectPressed(GameObject pressedObject)
     {

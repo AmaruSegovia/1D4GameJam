@@ -26,11 +26,40 @@ public class ChallengeManager : MonoBehaviour
 
     void Start()
     {
-        challengesFilePath = Path.Combine(Application.dataPath, "Resources/Challenges.json");
+        challengesFilePath = Path.Combine(Application.persistentDataPath, "Challenges.json");
+        EnsureJSONExists();
         LoadChallenges();
         DisplayCurrentChallenge();
         DisplayChallengesList();
     }
+
+    void EnsureJSONExists()
+    {
+        if (!File.Exists(challengesFilePath))
+        {
+            string sourcePath = Path.Combine(Application.streamingAssetsPath, "Challenges.json");
+
+            if (sourcePath.Contains("://") || sourcePath.Contains(":///"))
+            {
+                // Copia especial para plataformas móviles
+                StartCoroutine(CopyFromStreamingAssets(sourcePath, challengesFilePath));
+            }
+            else
+            {
+                File.Copy(sourcePath, challengesFilePath);
+            }
+        }
+    }
+
+    IEnumerator CopyFromStreamingAssets(string sourcePath, string targetPath)
+    {
+        using (WWW www = new WWW(sourcePath))
+        {
+            yield return www;
+            File.WriteAllBytes(targetPath, www.bytes);
+        }
+    }
+
 
     void LoadChallenges()
     {
