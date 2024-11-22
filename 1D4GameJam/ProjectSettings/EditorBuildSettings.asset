@@ -6,9 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/JuegoRuletaRusa.unity
-    guid: 6a083f46ccfb07a40942fd442b7b6310
-  - enabled: 1
     path: Assets/Scenes/Menu.unity
     guid: bdc1ad23aacf3a744a82b94bc03e1135
   - enabled: 1
