@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
@@ -19,6 +20,7 @@ public class GameManager : MonoBehaviour
     private bool countdownStarted = false;
     private List<string> challenges;
     private List<GameObject> areaObjects; // Lista de objetos "Area"
+    public string escenaAnterior;
 
 
 
@@ -34,6 +36,14 @@ public class GameManager : MonoBehaviour
         infoText.text = "Presiona los objetos 'Area'";
 
 
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.Escape) && SceneManager.GetActiveScene().name != "Menu")
+        {
+            SceneManager.LoadScene(escenaAnterior);
+        }
     }
 
     private void LoadChallenges()
